@@ -1,0 +1,28 @@
+# Large model weights and interrupted downloads
+PortableAI/models/*
+!PortableAI/models/.gitkeep
+*.gguf
+*.safetensors
+*.part
+
+# Per-install secrets and generated browser configuration
+PortableAI/storage-secret.txt
+PortableAI/web/storage-config.js
+
+# Runtime data
+PortableAI/cache/
+PortableAI/temp/
+PortableAI/logs/
+PortableAI/browser-data/
+PortableAI/profile-local/
+PortableAI/profile-roaming/
+AI聊天记录/
+AI生成图片/
+*.log
+running.json
+
+# Editor / OS files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

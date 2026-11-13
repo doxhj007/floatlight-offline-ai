@@ -1,0 +1,36 @@
+[
+  {
+    "path": "runtime-gpu\\ggml-vulkan.dll",
+    "sha256": "30a2bcb9dafede36a1b608b514bb288f2d63440e5e09506ae529acd56f632e14",
+    "parts": [
+      "runtime-gpu\\ggml-vulkan.dll.part01",
+      "runtime-gpu\\ggml-vulkan.dll.part02",
+      "runtime-gpu\\ggml-vulkan.dll.part03",
+      "runtime-gpu\\ggml-vulkan.dll.part04",
+      "runtime-gpu\\ggml-vulkan.dll.part05",
+      "runtime-gpu\\ggml-vulkan.dll.part06"
+    ]
+  },
+  {
+    "path": "runtime-image\\ggml-vulkan.dll",
+    "sha256": "7e74c9920ee2d88799b3d6f35617b341e7673ffc25952155b1703236912ad42c",
+    "parts": [
+      "runtime-image\\ggml-vulkan.dll.part01",
+      "runtime-image\\ggml-vulkan.dll.part02",
+      "runtime-image\\ggml-vulkan.dll.part03",
+      "runtime-image\\ggml-vulkan.dll.part04",
+      "runtime-image\\ggml-vulkan.dll.part05"
+    ]
+  },
+  {
+    "path": "runtime-image\\stable-diffusion.dll",
+    "sha256": "139dadbfd0a7482a1e142bc7fd37fd7676810ee06be519f9588116a54f2db9dd",
+    "parts": [
+      "runtime-image\\stable-diffusion.dll.part01",
+      "runtime-image\\stable-diffusion.dll.part02",
+      "runtime-image\\stable-diffusion.dll.part03",
+      "runtime-image\\stable-diffusion.dll.part04",
+      "runtime-image\\stable-diffusion.dll.part05"
+    ]
+  }
+]

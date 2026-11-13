@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0d1018">
+  <title>浮光 · 离线创作</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="聊天记录">
+      <div class="brand-row">
+        <div class="brand-mark" aria-hidden="true"><span></span></div>
+        <div class="brand-copy"><div class="brand-title">浮光</div><div class="brand-subtitle">离线思考与创作</div></div>
+        <button class="icon-btn mobile-only" id="closeSidebar" aria-label="关闭侧栏"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+      </div>
+      <button class="new-chat" id="newChat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>新建对话</span><kbd>Ctrl N</kbd></button>
+      <div class="history-title"><span>最近记录</span><button class="text-btn" id="refreshHistory">刷新</button></div>
+      <nav class="history-list" id="historyList" aria-live="polite"></nav>
+      <div class="storage-card">
+        <div class="storage-dot" id="storageDot"></div>
+        <div class="storage-copy"><strong id="storageState">正在连接 U 盘</strong><span id="storagePath">F:\AI聊天记录</span></div>
+      </div>
+    </aside>
+
+    <div class="backdrop" id="backdrop"></div>
+    <main class="main-panel">
+      <header class="topbar">
+        <button class="icon-btn mobile-only" id="openSidebar" aria-label="打开聊天记录"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+        <div class="top-title"><strong id="chatTitle">新对话</strong><span id="modelLabel">正在唤醒离线模型</span></div>
+        <div class="top-actions">
+          <span class="offline-pill"><i></i><span>完全离线</span></span>
+          <button class="icon-btn" id="copyPath" title="复制存档路径" aria-label="复制存档路径"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5h6l1.7 2H20v8.5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="M4 9.5V6a2 2 0 0 1 2-2h4l1.7 2H18a2 2 0 0 1 2 2v1.5"/></svg></button>
+        </div>
+      </header>
+
+      <section class="chat-scroll" id="chatScroll" tabindex="0" aria-label="对话内容">
+        <div class="welcome" id="welcome">
+          <div class="welcome-art" aria-hidden="true"><i></i><i></i><i></i><span>浮</span><b></b></div>
+          <p class="eyebrow">GEMMA × SDXL</p>
+          <h1>把想法留在本地</h1>
+          <p class="welcome-copy">聊问题、看图片、生成画面。模型和记录都跟着 U 盘走，断网也能使用。</p>
+          <div class="capability-grid">
+            <button data-prompt="用简单的话帮我讲明白："><b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14a3 3 0 0 1-3 3H9l-5 3v-3.7A3 3 0 0 1 2 13.5v-7A3.5 3.5 0 0 1 5.5 3h11A3.5 3.5 0 0 1 20 6.5Z"/><path d="M7 8h8M7 12h5"/></svg></b><span><strong>中文对话</strong><small>解释、整理与创作</small></span><em>→</em></button>
+            <button id="welcomeVision"><b><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m4 17 4-4 3.5 3 3-3 5.5 5"/></svg></b><span><strong>图片理解</strong><small>上传图片后提问</small></span><em>→</em></button>
+            <button id="welcomeImage"><b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 1.2 3.8L17 8l-3.8 1.2L12 13l-1.2-3.8L7 8l3.8-1.2Z"/><path d="m18.5 13 .7 2.3 2.3.7-2.3.7-.7 2.3-.7-2.3-2.3-.7 2.3-.7Z"/><path d="M5.5 13.5 6.4 16 9 17l-2.6.9-.9 2.6-.9-2.6L2 17l2.6-1Z"/></svg></b><span><strong>离线生图</strong><small>输入中文描述即可</small></span><em>→</em></button>
+          </div>
+        </div>
+        <div class="messages" id="messages" aria-live="polite"></div>
+      </section>
+
+      <footer class="composer-wrap">
+        <div class="notice" id="notice" role="status"></div>
+        <div class="attachment-strip hidden" id="attachmentStrip"></div>
+        <div class="edit-strip hidden" id="editStrip">
+          <div><strong>正在编辑已发送的指令</strong><span>发送后会从这里重新回答，后面的旧内容将被替换</span></div>
+          <button type="button" id="cancelEdit">取消编辑</button>
+        </div>
+        <div class="composer" id="composer">
+          <div class="composer-tools">
+            <button class="tool-btn" id="attachImage" type="button" title="上传图片进行识别" aria-label="上传图片进行识别">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m4 17 4-4 3.5 3 3-3 5.5 5"/></svg><em>看图</em>
+            </button>
+            <button class="tool-btn" id="imageMode" type="button" title="切换离线生图" aria-pressed="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 1.2 3.8L17 8l-3.8 1.2L12 13l-1.2-3.8L7 8l3.8-1.2Z"/><path d="m18.5 13 .7 2.3 2.3.7-2.3.7-.7 2.3-.7-2.3-2.3-.7 2.3-.7Z"/></svg><em>生图</em>
+            </button>
+            <input id="imageInput" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+          </div>
+          <textarea id="prompt" rows="1" maxlength="50000" placeholder="输入消息，Enter 发送" aria-label="输入消息"></textarea>
+          <button class="send-btn" id="send" aria-label="发送"><span>发送</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 14-7-4.5 14-2.8-5.7Z"/><path d="m11.7 13.3 3.1-3.1"/></svg></button>
+          <button class="stop-btn hidden" id="stop" aria-label="停止生成"><i></i><span>停止</span></button>
+        </div>
+        <div class="footer-line"><span id="saveState">记录自动保存在 U 盘</span><span id="modeHint">Enter 发送 · Shift + Enter 换行</span></div>
+      </footer>
+    </main>
+  </div>
+  <div class="dialog-backdrop hidden" id="dialogBackdrop" aria-hidden="true">
+    <section class="app-dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle" aria-describedby="dialogText">
+      <div class="dialog-mark" id="dialogMark" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg>
+      </div>
+      <h2 id="dialogTitle">操作对话</h2>
+      <p id="dialogText"></p>
+      <input class="dialog-input hidden" id="dialogInput" maxlength="100" autocomplete="off">
+      <div class="dialog-actions">
+        <button class="dialog-cancel" id="dialogCancel" type="button">取消</button>
+        <button class="dialog-confirm" id="dialogConfirm" type="button">确定</button>
+      </div>
+    </section>
+  </div>
+  <script src="./storage-config.js"></script>
+  <script src="./legacy-import.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
