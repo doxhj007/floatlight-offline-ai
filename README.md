@@ -13,6 +13,14 @@
 
 ## 使用方法
 
+### 完整离线包（推荐）
+
+在 [Releases](https://github.com/doxhj007/floatlight-offline-ai/releases) 下载同一版本的全部 `Floatlight-Full-*.part*.bin` 分卷、`Floatlight-Full-manifest.json`、`安装浮光完整离线包.cmd` 和 `Install-FloatlightFull.ps1`，放在同一个文件夹后双击安装器。完整包包含 Gemma 3 4B、SD-Turbo 和 SDXL-Turbo，安装完成后可断网直接运行，不需要再下载模型。
+
+GitHub 要求单个发布文件小于 2 GiB，因此完整包使用分卷；安装器会流式还原并逐文件校验，不会额外占用一份临时压缩包空间。
+
+### 源码版
+
 1. 下载仓库 ZIP，并把解压后的全部内容放到 U 盘或移动硬盘根目录。
 2. 双击 **`首次使用-下载基础模型.cmd`**。基础模型约 5.2GB，支持断点续传并在完成后校验 SHA-256。
 3. 双击 **`点击启动-浮光离线AI.cmd`**。程序会自动判断使用独显还是 CPU。
